@@ -5,26 +5,51 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Отсчёт — обычные цифры</title>
   <style>
-    html,body{height:100%;margin:0}
-    body{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:#000;
-      color:#fff;
-      font-family:Inter,system-ui,Arial,Helvetica,sans-serif;
+    html, body { height: 100%; margin: 0; }
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      color: #fff;
+      font-family: Inter, system-ui, Arial, Helvetica, sans-serif;
     }
-    .wrap{display:flex;gap:36px;align-items:center}
-    .unit{display:flex;flex-direction:column;align-items:center}
-    .number{font-size:6vw;line-height:1;font-weight:700;letter-spacing:0.04em}
-    .label{font-size:1.6vw;margin-top:6px;opacity:0.8}
-    @media (max-width:800px){
-      .number{font-size:10vw}
-      .label{font-size:3.6vw}
+    .top-text, .bottom-text {
+      font-size: 4vw;
+      letter-spacing: 0.05em;
+      margin: 20px 0;
+    }
+    .wrap {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+    .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .number {
+      font-size: 6vw;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .label {
+      font-size: 1.6vw;
+      margin-top: 6px;
+      opacity: 0.8;
+    }
+    @media (max-width: 800px) {
+      .top-text, .bottom-text { font-size: 8vw; }
+      .number { font-size: 10vw; }
+      .label { font-size: 3.6vw; }
     }
   </style>
 </head>
 <body>
+  <div class="top-text">plunq & 911</div>
   <div class="wrap" id="countdown" aria-live="polite">
     <div class="unit">
       <div id="days" class="number">0</div>
@@ -39,10 +64,11 @@
       <div class="label">МИНУТЫ</div>
     </div>
     <div class="unit">
-      <div id="seconds" class="number">0</div>
+      <div id="seconds" class="number">00</div>
       <div class="label">СЕКУНДЫ</div>
     </div>
   </div>
+  <div class="bottom-text">snake whore</div>
 
   <script>
     const targetDate = new Date(2025, 10, 19, 0, 0, 0); // 19 ноября 2025
@@ -59,7 +85,7 @@
         daysEl.textContent = 0;
         hoursEl.textContent = 0;
         minutesEl.textContent = 0;
-        secondsEl.textContent = 0;
+        secondsEl.textContent = '00';
         return;
       }
 
@@ -71,7 +97,7 @@
       daysEl.textContent = days;
       hoursEl.textContent = hours;
       minutesEl.textContent = minutes;
-      secondsEl.textContent = seconds;
+      secondsEl.textContent = seconds < 10 ? '0' + seconds : seconds;
     }
 
     update();
