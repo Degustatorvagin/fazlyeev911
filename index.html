@@ -10,12 +10,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      background: #000;
+      justify-content: space-between; /* чтобы нижний текст прижимался к низу */
+      background: #000; /* можно заменить на фото через url() */
       color: #fff;
       font-family: Inter, system-ui, Arial, Helvetica, sans-serif;
+      padding: 20px 0;
+      box-sizing: border-box;
     }
-    .top-text, .bottom-text {
+    .top-text {
       font-size: 4vw;
       font-weight: 700;   /* жирный */
       font-style: italic; /* наклон */
@@ -43,15 +45,30 @@
       margin-top: 6px;
       opacity: 0.8;
     }
+    .bottom-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    .bottom-text {
+      font-size: 4vw;
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
     @media (max-width: 800px) {
-      .top-text, .bottom-text { font-size: 8vw; }
+      .top-text { font-size: 8vw; }
       .number { font-size: 10vw; }
       .label { font-size: 3.6vw; }
+      .bottom-text { font-size: 6vw; }
     }
   </style>
 </head>
 <body>
   <div class="top-text">plunq & 911</div>
+
   <div class="wrap" id="countdown" aria-live="polite">
     <div class="unit">
       <div id="days" class="number">0</div>
@@ -70,7 +87,11 @@
       <div class="label">СЕКУНДЫ</div>
     </div>
   </div>
-  <div class="bottom-text">SHAKE WHORE</div>
+
+  <div class="bottom-container">
+    <div class="bottom-text">SHAKE WHORE</div>
+    <div class="bottom-text">XIX.XI.XXV</div>
+  </div>
 
   <script>
     const targetDate = new Date(2025, 10, 19, 0, 0, 0); // 19 ноября 2025
