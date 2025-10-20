@@ -1,124 +1,127 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Отсчёт — обычные цифры</title>
-  <style>
-    html, body { height: 100%; margin: 0; }
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between; /* нижний текст прижат к низу */
-      align-items: center;
-      background: #000;
-      color: #fff;
-      font-family: Inter, system-ui, Arial, Helvetica, sans-serif;
-      padding: 20px 0;
-      box-sizing: border-box;
-    }
-    .top-text, .near-timer {
-      font-size: 4vw;
-      font-weight: 700;
-      font-style: italic;
-      letter-spacing: 0.05em;
-      margin: 0; /* прям у таймера */
-    }
-    .wrap {
-      display: flex;
-      gap: 36px;
-      align-items: center;
-    }
-    .unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .number {
-      font-size: 6vw;
-      line-height: 1;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-    .label {
-      font-size: 1.6vw;
-      margin-top: 6px;
-      opacity: 0.8;
-    }
-    .bottom-text {
-      font-size: 6vw; /* крупнее */
-      font-weight: 700;
-      font-style: italic;
-      margin-bottom: 10px;
-      letter-spacing: 0.05em;
-      text-align: center;
-    }
-    @media (max-width: 800px) {
-      .top-text, .near-timer { font-size: 8vw; }
-      .number { font-size: 10vw; }
-      .label { font-size: 3.6vw; }
-      .bottom-text { font-size: 10vw; }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Отсчёт — обычные цифры</title>
+<style>
+html, body { height: 100%; margin: 0; }
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #000;
+  color: #fff;
+  font-family: Inter, system-ui, Arial, Helvetica, sans-serif;
+}
+.center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+  margin-bottom: auto; /* по центру */
+}
+.top-text, .near-timer {
+  font-size: 4vw;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  margin: 2px 0; /* прям вплотную к таймеру */
+}
+.wrap {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  margin: 10px 0;
+}
+.unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.number {
+  font-size: 6vw;
+  font-weight: 700;
+  line-height: 1;
+}
+.label {
+  font-size: 1.6vw;
+  margin-top: 6px;
+  opacity: 0.8;
+}
+.bottom-text {
+  font-size: 6vw;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  text-align: center;
+}
+@media (max-width:800px){
+  .top-text, .near-timer { font-size: 8vw; }
+  .number { font-size: 10vw; }
+  .label { font-size: 3.6vw; }
+  .bottom-text { font-size: 10vw; }
+}
+</style>
 </head>
 <body>
-  <div class="top-text">plunq & 911</div>
+  <div class="center-container">
+    <div class="top-text">plunq & 911</div>
 
-  <div class="wrap" id="countdown" aria-live="polite">
-    <div class="unit">
-      <div id="days" class="number">0</div>
-      <div class="label">ДНИ</div>
+    <div class="wrap" id="countdown" aria-live="polite">
+      <div class="unit">
+        <div id="days" class="number">0</div>
+        <div class="label">ДНИ</div>
+      </div>
+      <div class="unit">
+        <div id="hours" class="number">0</div>
+        <div class="label">ЧАСЫ</div>
+      </div>
+      <div class="unit">
+        <div id="minutes" class="number">0</div>
+        <div class="label">МИНУТЫ</div>
+      </div>
+      <div class="unit">
+        <div id="seconds" class="number">00</div>
+        <div class="label">СЕКУНДЫ</div>
+      </div>
     </div>
-    <div class="unit">
-      <div id="hours" class="number">0</div>
-      <div class="label">ЧАСЫ</div>
-    </div>
-    <div class="unit">
-      <div id="minutes" class="number">0</div>
-      <div class="label">МИНУТЫ</div>
-    </div>
-    <div class="unit">
-      <div id="seconds" class="number">00</div>
-      <div class="label">СЕКУНДЫ</div>
-    </div>
+
+    <div class="near-timer">SHAKE WHORE</div>
   </div>
-
-  <div class="near-timer">SHAKE WHORE</div>
 
   <div class="bottom-text">XIX.XI.XXV</div>
 
-  <script>
-    const targetDate = new Date(2025, 10, 19, 0, 0, 0);
+<script>
+const targetDate = new Date(2025,10,19,0,0,0);
+const daysEl = document.getElementById('days');
+const hoursEl = document.getElementById('hours');
+const minutesEl = document.getElementById('minutes');
+const secondsEl = document.getElementById('seconds');
 
-    const daysEl = document.getElementById('days');
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
+function update(){
+  const now = new Date();
+  let diff = Math.floor((targetDate-now)/1000);
+  if(diff<=0){
+    daysEl.textContent=0;
+    hoursEl.textContent=0;
+    minutesEl.textContent=0;
+    secondsEl.textContent='00';
+    return;
+  }
+  const days=Math.floor(diff/86400); diff-=days*86400;
+  const hours=Math.floor(diff/3600); diff-=hours*3600;
+  const minutes=Math.floor(diff/60); diff-=minutes*60;
+  const seconds=diff;
 
-    function update() {
-      const now = new Date();
-      let diff = Math.floor((targetDate - now) / 1000);
-      if(diff <= 0){
-        daysEl.textContent = 0;
-        hoursEl.textContent = 0;
-        minutesEl.textContent = 0;
-        secondsEl.textContent = '00';
-        return;
-      }
-
-      const days = Math.floor(diff / 86400); diff -= days * 86400;
-      const hours = Math.floor(diff / 3600); diff -= hours * 3600;
-      const minutes = Math.floor(diff / 60); diff -= minutes * 60;
-      const seconds = diff;
-
-      daysEl.textContent = days;
-      hoursEl.textContent = hours;
-      minutesEl.textContent = minutes;
-      secondsEl.textContent = seconds < 10 ? '0' + seconds : seconds;
-    }
-
-    update();
-    setInterval(update, 1000);
-  </script>
+  daysEl.textContent=days;
+  hoursEl.textContent=hours;
+  minutesEl.textContent=minutes;
+  secondsEl.textContent=seconds<10?'0'+seconds:seconds;
+}
+update();
+setInterval(update,1000);
+</script>
 </body>
 </html>
