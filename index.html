@@ -9,8 +9,8 @@
     body {
       display: flex;
       flex-direction: column;
+      justify-content: space-between; /* чтобы нижний текст прижимался к низу */
       align-items: center;
-      justify-content: space-between;
       background: #000;
       color: #fff;
       font-family: Inter, system-ui, Arial, Helvetica, sans-serif;
@@ -22,7 +22,7 @@
       font-weight: 700;
       font-style: italic;
       letter-spacing: 0.05em;
-      margin: 10px 0;
+      margin: 5px 0; /* маленький отступ, чтобы было близко к таймеру */
     }
     .wrap {
       display: flex;
@@ -46,10 +46,10 @@
       opacity: 0.8;
     }
     .bottom-text {
-      font-size: 4vw;
+      font-size: 6vw; /* крупнее */
       font-weight: 700;
       font-style: italic;
-      margin-top: 20px; /* чуть ниже */
+      margin-bottom: 10px;
       letter-spacing: 0.05em;
       text-align: center;
     }
@@ -57,7 +57,7 @@
       .top-text, .near-timer { font-size: 8vw; }
       .number { font-size: 10vw; }
       .label { font-size: 3.6vw; }
-      .bottom-text { font-size: 6vw; }
+      .bottom-text { font-size: 10vw; }
     }
   </style>
 </head>
