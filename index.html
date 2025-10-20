@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Отсчёт — римские цифры</title>
+  <style>
+    html,body{height:100%;margin:0}
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#000;
+      color:#fff;
+      font-family:Inter,system-ui,Arial,Helvetica,sans-serif;
+    }
+    .wrap{display:flex;gap:36px;align-items:center}
+    .unit{display:flex;flex-direction:column;align-items:center}
+    .roman{font-size:6vw;line-height:1;font-weight:700;letter-spacing:0.04em}
+    .label{font-size:1.6vw;margin-top:6px;opacity:0.8}
+    @media (max-width:800px){
+      .roman{font-size:10vw}
+      .label{font-size:3.6vw}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="countdown" aria-live="polite">
+    <div class="unit">
+      <div id="days" class="roman">N</div>
+      <div class="label">ДНИ</div>
+    </div>
+    <div class="unit">
+      <div id="hours" class="roman">N</div>
+      <div class="label">ЧАСЫ</div>
+    </div>
+    <div class="unit">
+      <div id="minutes" class="roman">N</div>
+      <div class="label">МИНУТЫ</div>
+    </div>
+    <div class="unit">
+      <div id="seconds" class="roman">N</div>
+      <div class="label">СЕКУНДЫ</div>
+    </div>
+  </div>
+
+  <script>
+    // Конвертация числа в римские цифры (0 -> N)
+    function intToRoman(num){
+      if(num === 0) return 'N';
+      if(num < 0) return '-' + intToRoman(Math.abs(num));
+      const vals = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+      const syms = ['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
+      let res = '';
+      for(let i=0;i<vals.length;i++){
+        while(num >= vals[i]){
+          res += syms[i];
+          num -= vals[i];
+        }
+      }
+      return res;
+    }
+
+    // Целевая дата: 19 ноября 2025 (00:00:00)
+    const targetDate = new Date(2025, 10, 19, 0, 0, 0);
+
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    function update(){
+      const now = new Date();
+      let diff = Math.floor((targetDate - now) / 1000);
+      if(diff <= 0){
+        daysEl.textContent = intToRoman(0);
+        hoursEl.textContent = intToRoman(0);
+        minutesEl.textContent = intToRoman(0);
+        secondsEl.textContent = intToRoman(0);
+        return;
+      }
+      const days = Math.floor(diff / 86400); diff -= days * 86400;
+      const hours = Math.floor(diff / 3600); diff -= hours * 3600;
+      const minutes = Math.floor(diff / 60); diff -= minutes * 60;
+      const seconds = diff;
+
+      daysEl.textContent = intToRoman(days);
+      hoursEl.textContent = intToRoman(hours);
+      minutesEl.textContent = intToRoman(minutes);
+      secondsEl.textContent = intToRoman(seconds);
+    }
+
+    update();
+    setInterval(update, 1000);
+  </script>
+</body>
+</html>
